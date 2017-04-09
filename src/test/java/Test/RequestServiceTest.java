@@ -60,4 +60,11 @@ public class RequestServiceTest {
 		assertTrue(resultado);
 	}
 
+	/*public static void main(String[] args) {
+		import model.Asignacion;
+		import model.Asignaciones;
+		import model.Estudiante;
+		import services.RequestService;
+	}*/
+
 }
