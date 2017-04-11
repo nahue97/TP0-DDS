@@ -14,9 +14,9 @@ import java.util.List;
 public class NotasViewModel{
 	
 	private RequestService requester;
-	Asignaciones asignaciones = new Asignaciones();
-	private String token, estudianteApellido, estudianteUsuario, textoAsignaciones;
-	private int estudianteLegajo;
+	private Asignaciones asignaciones = new Asignaciones();
+	private String token, estudianteApellido, estudianteNombre, estudianteUsuario, asignaturaTitulo, asignaturaDescripcion;
+	private int estudianteLegajo,asignaturaId;
 	
 	public void setUp(){
 		this.requester = new RequestService();
@@ -30,8 +30,16 @@ public class NotasViewModel{
 		
 		estudianteLegajo = estudiante.getLegajo();
 		estudianteApellido = estudiante.getApellido();
+		estudianteNombre = estudiante.getNombre();
 		estudianteUsuario = estudiante.getUsuarioGithub();
 		asignaciones = this.requester.getAssignmentsForStudent(token);
+		this.updateAsignacion();
+	}
+	
+	public void updateAsignacion(){
+		this.asignaturaId = asignaciones.getAsignaciones().get(0).getId();
+		this.asignaturaTitulo = asignaciones.getAsignaciones().get(0).getTitulo();
+		this.asignaturaDescripcion = asignaciones.getAsignaciones().get(0).getDescription();
 	}
 	
 	//getters
@@ -41,27 +49,30 @@ public class NotasViewModel{
 	public String getEstudianteApellido(){
 		return this.estudianteApellido;
 	}
+	public String getEstudianteNombre(){
+		return this.estudianteNombre;
+	}
 	public String getEstudianteUsuario(){
 		return this.estudianteUsuario;
 	}
 	public String getToken(){
 		return this.token;
 	}
-	public String getTextoAsignaciones(){//Decidí convertir las asignaciones en texto porque no sabría muy bien como hacerlo de otra manera más elegante
-		List <Asignacion> listaAsignaciones = asignaciones.getAsignaciones();
-		textoAsignaciones = "";
-		
-		for(Asignacion asig: listaAsignaciones){
-			textoAsignaciones = textoAsignaciones + asig.getTitulo(); //Quiero que retorne los títulos solamente para probar, pero la la bel está siempre vacía
-		}
-		return textoAsignaciones;
+	public int getAsignaturaId(){
+		return this.asignaturaId;
+	}
+	public String getAsignaturaTitulo(){
+		return this.asignaturaTitulo;
+	}
+	public String getAsignaturaDescripcion(){
+		return this.asignaturaDescripcion;
 	}
 	
 	//setters
 	public void setToken(String unToken){
 		this.token = unToken;
 	}
-	/* Toda la parte de modificar el usiario, desearía saber cómo hacerlo en una ventana nueva
+	/* Toda la parte de modificar el usiario, desearï¿½a saber cï¿½mo hacerlo en una ventana nueva
 	//Crear Estudiante
 	
 	Estudiante estudiante = new Estudiante();

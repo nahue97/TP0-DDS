@@ -78,7 +78,7 @@ public class RequestService {
 		}
 		
 		String respuesta = response.getEntity(String.class);
-		Asignaciones asignaciones = new Asignaciones(); 
+		Asignaciones asignaciones = null; 
 
 		if (respuesta.contains("assignments")) {
 			System.out.println(respuesta);

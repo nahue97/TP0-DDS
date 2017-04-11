@@ -18,8 +18,8 @@ public class Estudiante {
 	@SerializedName("github_user")
 	private String usuarioGithub;
 
-	@Expose(serialize = false, deserialize = true)
-	@SerializedName("assignments")
+//	@Expose(serialize = false, deserialize = true)
+//	@SerializedName("assignments")
 	private List<Asignacion> asignaciones;
 
 	public int getLegajo() {

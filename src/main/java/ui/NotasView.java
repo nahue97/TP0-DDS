@@ -10,7 +10,10 @@ import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
+import org.uqbar.arena.widgets.tables.Column;
+import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.MainWindow;
+
 
 @SuppressWarnings("serial")
 public class NotasView extends MainWindow<NotasViewModel>{
@@ -19,40 +22,71 @@ public class NotasView extends MainWindow<NotasViewModel>{
 	    super(new NotasViewModel());
 	}
 	
- @Override
- public void createContents(Panel mainPanel) {
+	@Override
+	public void createContents(Panel mainPanel) {
 	 
-	 setTitle("Notas del alumno");
-	 mainPanel.setLayout(new VerticalLayout());
+		setTitle("Notas del alumno");
+		mainPanel.setLayout(new VerticalLayout());
 	 
-	 new Label(mainPanel).setText("Ingrese Su Token");
+		new Label(mainPanel).setText("Ingrese Su Token");
 		 
-	 new TextBox(mainPanel).bindValueToProperty("token");
+		new TextBox(mainPanel).bindValueToProperty("token");
 	 
-	 new Button(mainPanel) //
-	 .setCaption("Obtener Notas") //
-	 .onClick(() -> getModelObject().obtenerEstudiante());
+		new Button(mainPanel) //
+			.setCaption("Obtener Notas") //
+			.onClick(() -> getModelObject().obtenerEstudiante());
 	 
-	 new Label(mainPanel).setText("Apellido");
+		new Label(mainPanel).setText("Apellido");
 	 
-	 new Label(mainPanel).bindValueToProperty("estudianteApellido");
+		new Label(mainPanel).bindValueToProperty("estudianteApellido");
 	 
-	 new Label(mainPanel).setText("Legajo");
+		new Label(mainPanel).setText("Nombre");
+		
+		new Label(mainPanel).bindValueToProperty("estudianteNombre");
+		
+		new Label(mainPanel).setText("Legajo");
 	 
-	 new Label(mainPanel).bindValueToProperty("estudianteLegajo");
+		new Label(mainPanel).bindValueToProperty("estudianteLegajo");
 	 
-	 new Label(mainPanel).setText("Usuario de GIT");
-	 //Me gustaría saber cómo implementar un layout vertical para estas dos Label se que
-	 //deberían estar dentro de otro Panel pero no se muy bien cómo integrarlo al mainPanel
-	 new Label(mainPanel).bindValueToProperty("estudianteUsuario");
+		new Label(mainPanel).setText("Usuario de GIT");
+		//Me gustarï¿½a saber cï¿½mo implementar un layout vertical para estas dos Label se que
+		//deberï¿½an estar dentro de otro Panel pero no se muy bien cï¿½mo integrarlo al mainPanel
+		new Label(mainPanel).bindValueToProperty("estudianteUsuario");
 	 
-	 new Label(mainPanel).setText("Asignaturas");
-	 
-	 new Label(mainPanel).bindValueToProperty("textoAsignaciones"); //Debería encargarse de los detalles de las asignaciones
- }
- 
- 
- public static void main(String[] args) {
-	 new NotasView().startApplication();
-	 }
+		new Label(mainPanel).setText("Asignaturas");
+//DATOS ASIGNATURA DE PRUEBA	 
+		new Label(mainPanel).bindValueToProperty("asignaturaId");
+		
+		new Label(mainPanel).bindValueToProperty("asignaturaTitulo");
+		
+		new Label(mainPanel).bindValueToProperty("asignaturaDescripcion");
+		
+		Table tableAsignaturas = new Table<>(mainPanel, NotasViewModel.class);
+		
+			Column<NotasViewModel> columnaId = new Column<NotasViewModel>(tableAsignaturas);
+				columnaId.setTitle("Id");
+				columnaId.setFixedSize(50);
+				columnaId.bindContentsToProperty("asignaturaId");
+		
+			Column<NotasViewModel> columnaTitulo = new Column<NotasViewModel>(tableAsignaturas);
+				columnaTitulo.setTitle("Titulo");
+				columnaId.bindContentsToProperty("asignaturaTitulo");
+		
+			Column<NotasViewModel> columnaDescripcion = new Column<NotasViewModel>(tableAsignaturas);
+				columnaDescripcion.setTitle("Descripcion");
+				columnaId.bindContentsToProperty("asignaturaDescripcion");
+				
+			Column<NotasViewModel> columnaNotas = new Column<NotasViewModel>(tableAsignaturas);
+				columnaNotas.setTitle("Notas");
+				columnaId.bindContentsToProperty("asignaturaNotas");
+				
+		tableAsignaturas.setHeigth(300);
+		tableAsignaturas.setWidth(1000);		
+		
+	}
+	
+	public static void main(String[] args) {
+		new NotasView().startApplication();
+	}
+	
 }
