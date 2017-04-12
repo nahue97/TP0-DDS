@@ -14,9 +14,10 @@ import java.util.List;
 public class NotasViewModel{
 	private String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMTEyMjIzMzMiLCJybmQiOiJ5SXNmZFIwN2lIR3BRRmVjYU9KT2VRPT0ifQ.9pVJGUXhrJPQ-TptNCt971l0h_1dWqWgMrHAWXJchho";
 	private RequestService requester;
-	private String estudianteApellido, estudianteNombre, estudianteUsuario, asignaturaTitulo, asignaturaDescripcion, textoAsignaturas = "Hola";
-	private int estudianteLegajo,asignaturaId;
-	List <Asignacion> listaDeAsignaturas;
+	private String estudianteApellido, estudianteNombre, estudianteUsuario, asignaturaTitulo, asignaturaDescripcion, textoAsignaturas = "";
+	private Integer estudianteLegajo,asignaturaId;
+	private List <Asignacion> listaDeAsignaturas;
+	private Asignacion asignacionSeleccionada;
 	
 	public void setUp(){
 		this.requester = new RequestService();
@@ -33,7 +34,7 @@ public class NotasViewModel{
 		estudianteNombre = estudiante.getNombre();
 		estudianteUsuario = estudiante.getUsuarioGithub();
 		listaDeAsignaturas = this.requester.getAssignmentsForStudent(token).getAsignaciones();
-		this.updateAsignacion(0);//Código que no se usa
+		this.updateAsignacion(0);//Cï¿½digo que no se usa
 		this.updateTextoAsignaturas();
 	}
 	
@@ -79,19 +80,23 @@ public class NotasViewModel{
 		return "ID: " + id + "   Valor: " + valor + "   Creado: " + creado + "   Actualizado: " + actualizado;
 	}
 	
-	//Sustitución de la tabla por label
+	//Sustituciï¿½n de la tabla por label
 	
 	public String getTextoAsignaturas(){
 		return this.textoAsignaturas;
 	}
 	
 	//Getters para la tabla
-	public List<Asignacion> getAsignacion(){
+	public List<Asignacion> getAsignaciones(){
 		return this.listaDeAsignaturas;
 	}
 	
+	public Asignacion getAsignacionSeleccionada(){
+		return this.asignacionSeleccionada;
+	}
+	
 	public Asignacion selectedAsignacion(){
-		return this.getAsignacion().get(0);//Pongo la primera para probar
+		return this.getAsignaciones().get(0);//Pongo la primera para probar
 	}
 	
 	//Getters
@@ -111,7 +116,7 @@ public class NotasViewModel{
 		return this.token;
 	}
 	
-	//Asignaciones Código que no se usa
+	//Asignaciones Cï¿½digo que no se usa
 	
 	public int getAsignaturaId(){
 		return this.asignaturaId;
@@ -121,6 +126,10 @@ public class NotasViewModel{
 	}
 	public String getAsignaturaDescripcion(){
 		return this.asignaturaDescripcion;
+	}
+	
+	public void setListaDeAsignaturas(List <Asignacion> listaDeAsignaturas){
+		this.listaDeAsignaturas = listaDeAsignaturas;
 	}
 	
 	//setters
