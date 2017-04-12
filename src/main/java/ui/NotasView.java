@@ -4,6 +4,7 @@ package ui;
 
 import java.awt.Color;
 
+
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -13,7 +14,7 @@ import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.MainWindow;
-
+import model.Asignacion;
 
 @SuppressWarnings("serial")
 public class NotasView extends MainWindow<NotasViewModel>{
@@ -27,62 +28,84 @@ public class NotasView extends MainWindow<NotasViewModel>{
 	 
 		setTitle("Notas del alumno");
 		mainPanel.setLayout(new VerticalLayout());
-	 
-		new Label(mainPanel).setText("Ingrese Su Token");
+		
+		Panel tokenPanel = new Panel(mainPanel);
+		tokenPanel.setLayout(new HorizontalLayout());
+		
+		new Label(tokenPanel).setText("Ingrese Su Token:").setFontSize(11);
 		 
-		new TextBox(mainPanel).bindValueToProperty("token");
+		new TextBox(tokenPanel).setWidth(500).setHeigth(15).bindValueToProperty("token");
 	 
-		new Button(mainPanel) //
+		new Button(tokenPanel) //
 			.setCaption("Obtener Notas") //
-			.onClick(() -> getModelObject().obtenerEstudiante());
-	 
-		new Label(mainPanel).setText("Apellido");
-	 
-		new Label(mainPanel).bindValueToProperty("estudianteApellido");
-	 
-		new Label(mainPanel).setText("Nombre");
+			.onClick(() -> getModelObject().obtenerEstudiante())
+			.setFontSize(9)
+			.setHeigth(22);
 		
-		new Label(mainPanel).bindValueToProperty("estudianteNombre");
 		
-		new Label(mainPanel).setText("Legajo");
+		Panel apellidoPanel = new Panel(mainPanel);
+		apellidoPanel.setLayout(new HorizontalLayout());
+		
+		new Label(apellidoPanel).setText("Apellido: ").setFontSize(11);
+		new Label(apellidoPanel).setFontSize(11).setWidth(100).bindValueToProperty("estudianteApellido");
+		
+		Panel nombrePanel = new Panel(mainPanel);
+		nombrePanel.setLayout(new HorizontalLayout());
 	 
-		new Label(mainPanel).bindValueToProperty("estudianteLegajo");
+		new Label(nombrePanel).setText("Nombre: ").setFontSize(11);
+		new Label(nombrePanel).setFontSize(11).setWidth(100).bindValueToProperty("estudianteNombre");
+		
+		Panel legajoPanel = new Panel(mainPanel);
+		legajoPanel.setLayout(new HorizontalLayout());
+		
+		new Label(legajoPanel).setText("Legajo: ").setFontSize(11);
+		new Label(legajoPanel).setFontSize(11).setWidth(100).bindValueToProperty("estudianteLegajo");
+		
+		Panel usuarioPanel = new Panel(mainPanel);
+		usuarioPanel.setLayout(new HorizontalLayout());
 	 
-		new Label(mainPanel).setText("Usuario de GIT");
-		//Me gustarï¿½a saber cï¿½mo implementar un layout vertical para estas dos Label se que
-		//deberï¿½an estar dentro de otro Panel pero no se muy bien cï¿½mo integrarlo al mainPanel
-		new Label(mainPanel).bindValueToProperty("estudianteUsuario");
+		new Label(usuarioPanel).setText("Usuario de GIT: ").setFontSize(11);
+		new Label(usuarioPanel).setFontSize(11).setWidth(100).bindValueToProperty("estudianteUsuario");
 	 
-		new Label(mainPanel).setText("Asignaturas");
-//DATOS ASIGNATURA DE PRUEBA	 
-		new Label(mainPanel).bindValueToProperty("asignaturaId");
+		new Label(mainPanel).setText("Asignaturas: ");
+		
+		//DATOS ASIGNATURA DE PRUEBA	 
+		/*new Label(mainPanel).bindValueToProperty("asignaturaId");
 		
 		new Label(mainPanel).bindValueToProperty("asignaturaTitulo");
 		
-		new Label(mainPanel).bindValueToProperty("asignaturaDescripcion");
+		new Label(mainPanel).bindValueToProperty("asignaturaDescripcion");*/
 		
-		Table tableAsignaturas = new Table<>(mainPanel, NotasViewModel.class);
+		new Label(mainPanel).setHeigth(30).bindValueToProperty("textoAsignaturas");//El label se va a encargar de mostrar las cosas
+																	// ya que la tabla no sale
 		
-			Column<NotasViewModel> columnaId = new Column<NotasViewModel>(tableAsignaturas);
+		
+		//Tabla Fallida
+		/*Table<Asignacion> tableAsignaturas = new Table<>(mainPanel, Asignacion.class);
+		
+		tableAsignaturas.bindItemsToProperty("asignacion");
+		
+		tableAsignaturas.bindValueToProperty("selectedAsignacion");
+			Column<Asignacion> columnaId = new Column<Asignacion>(tableAsignaturas);
 				columnaId.setTitle("Id");
 				columnaId.setFixedSize(50);
 				columnaId.bindContentsToProperty("asignaturaId");
 		
-			Column<NotasViewModel> columnaTitulo = new Column<NotasViewModel>(tableAsignaturas);
+				Column<Asignacion> columnaTitulo = new Column<Asignacion>(tableAsignaturas);
 				columnaTitulo.setTitle("Titulo");
 				columnaId.bindContentsToProperty("asignaturaTitulo");
 		
-			Column<NotasViewModel> columnaDescripcion = new Column<NotasViewModel>(tableAsignaturas);
+			Column<Asignacion> columnaDescripcion = new Column<Asignacion>(tableAsignaturas);
 				columnaDescripcion.setTitle("Descripcion");
 				columnaId.bindContentsToProperty("asignaturaDescripcion");
 				
-			Column<NotasViewModel> columnaNotas = new Column<NotasViewModel>(tableAsignaturas);
-				columnaNotas.setTitle("Notas");
-				columnaId.bindContentsToProperty("asignaturaNotas");
+			//Las notas las dejamos para después, primero que salga todo lo otro
+			//Column<Asignacion> columnaNotas = new Column<Asignacion>(tableAsignaturas);
+			//	columnaNotas.setTitle("Notas");
+			//	columnaId.bindContentsToProperty("asignaturaNotas");
 				
 		tableAsignaturas.setHeigth(300);
-		tableAsignaturas.setWidth(1000);		
-		
+		tableAsignaturas.setWidth(1000);*/
 	}
 	
 	public static void main(String[] args) {

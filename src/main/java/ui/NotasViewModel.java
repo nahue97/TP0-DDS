@@ -1,8 +1,8 @@
 package ui;
 
 import model.Asignacion;
-import model.Asignaciones;
 import model.Estudiante;
+import model.Nota;
 import services.RequestService;
 
 import org.uqbar.commons.utils.Observable;
@@ -12,11 +12,11 @@ import java.util.List;
 
 @Observable
 public class NotasViewModel{
-	
+	private String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMTEyMjIzMzMiLCJybmQiOiJ5SXNmZFIwN2lIR3BRRmVjYU9KT2VRPT0ifQ.9pVJGUXhrJPQ-TptNCt971l0h_1dWqWgMrHAWXJchho";
 	private RequestService requester;
-	private Asignaciones asignaciones = new Asignaciones();
-	private String token, estudianteApellido, estudianteNombre, estudianteUsuario, asignaturaTitulo, asignaturaDescripcion;
+	private String estudianteApellido, estudianteNombre, estudianteUsuario, asignaturaTitulo, asignaturaDescripcion, textoAsignaturas = "Hola";
 	private int estudianteLegajo,asignaturaId;
+	List <Asignacion> listaDeAsignaturas;
 	
 	public void setUp(){
 		this.requester = new RequestService();
@@ -32,17 +32,69 @@ public class NotasViewModel{
 		estudianteApellido = estudiante.getApellido();
 		estudianteNombre = estudiante.getNombre();
 		estudianteUsuario = estudiante.getUsuarioGithub();
-		asignaciones = this.requester.getAssignmentsForStudent(token);
-		this.updateAsignacion();
+		listaDeAsignaturas = this.requester.getAssignmentsForStudent(token).getAsignaciones();
+		this.updateAsignacion(0);//Código que no se usa
+		this.updateTextoAsignaturas();
 	}
 	
-	public void updateAsignacion(){
-		this.asignaturaId = asignaciones.getAsignaciones().get(0).getId();
-		this.asignaturaTitulo = asignaciones.getAsignaciones().get(0).getTitulo();
-		this.asignaturaDescripcion = asignaciones.getAsignaciones().get(0).getDescription();
+	public void updateAsignacion(int i){//No se usa
+		this.asignaturaId = listaDeAsignaturas.get(i).getId();
+		this.asignaturaTitulo = listaDeAsignaturas.get(i).getTitulo();
+		this.asignaturaDescripcion = listaDeAsignaturas.get(i).getDescription();
 	}
 	
-	//getters
+	public void updateTextoAsignaturas(){
+		textoAsignaturas = "";
+		
+		for(Asignacion asignatura:listaDeAsignaturas){
+			textoAsignaturas = textoAsignaturas + this.datosDeAsignatura(asignatura) + "\n";
+		}
+	}
+	
+	public String datosDeAsignatura(Asignacion asignatura){
+		int id = asignatura.getId();
+		String titulo = asignatura.getTitulo();
+		String descripcion = asignatura.getDescription();
+		List<Nota> notas = asignatura.getNotas();
+		
+		return "Materia: " + titulo + "   ID: " + id + "   Descripcion: " + descripcion + "   Notas: " + this.procesarNotas(notas);
+	}
+	
+	public String procesarNotas(List<Nota> notas){
+		String texto = "";
+		
+		for(Nota nota:notas){
+			texto = texto + this.datosDeNota(nota) + "\n";
+		}
+		
+		return texto;
+	}
+	
+	public String datosDeNota(Nota nota){
+		int id = nota.getId();
+		String valor = nota.getValor();
+		String creado = nota.getCreado();
+		String actualizado= nota.getActualizado();
+		
+		return "ID: " + id + "   Valor: " + valor + "   Creado: " + creado + "   Actualizado: " + actualizado;
+	}
+	
+	//Sustitución de la tabla por label
+	
+	public String getTextoAsignaturas(){
+		return this.textoAsignaturas;
+	}
+	
+	//Getters para la tabla
+	public List<Asignacion> getAsignacion(){
+		return this.listaDeAsignaturas;
+	}
+	
+	public Asignacion selectedAsignacion(){
+		return this.getAsignacion().get(0);//Pongo la primera para probar
+	}
+	
+	//Getters
 	public int getEstudianteLegajo(){
 		return this.estudianteLegajo;
 	}
@@ -58,6 +110,9 @@ public class NotasViewModel{
 	public String getToken(){
 		return this.token;
 	}
+	
+	//Asignaciones Código que no se usa
+	
 	public int getAsignaturaId(){
 		return this.asignaturaId;
 	}
