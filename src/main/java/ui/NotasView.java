@@ -13,15 +13,22 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
-import org.uqbar.arena.windows.MainWindow;
+import org.uqbar.arena.windows.Dialog;
+import org.uqbar.arena.windows.Window;
+import org.uqbar.arena.windows.SimpleWindow;
+import org.uqbar.arena.windows.WindowOwner;
 
 import model.Asignacion;
+import ui.vm.NotasViewModel;
+import ui.vm.CrearEstudianteViewModel;
+import ui.CrearEstudianteView;
+
 
 @SuppressWarnings("serial")
-public class NotasView extends MainWindow<NotasViewModel> {
+public class NotasView extends Window<NotasViewModel> {
 
-	public NotasView() {
-		super(new NotasViewModel());
+	public NotasView(WindowOwner parent) {
+		super(parent, new NotasViewModel());
 	}
 
 	@Override
@@ -69,6 +76,16 @@ public class NotasView extends MainWindow<NotasViewModel> {
 
 		this.tablaResultadoAsignaciones(mainPanel);
 		
+		new Button(mainPanel) //
+		.setCaption("Modificar Estudiante") //
+		.onClick(this::modificarEstudiante).setFontSize(9);
+
+	}
+	
+	public void modificarEstudiante() {
+		Dialog<?> dialog = new CrearEstudianteView(this);
+		dialog.open();
+		dialog.onAccept(() -> {});
 	}
 	
 	protected void tablaResultadoAsignaciones(Panel mainPanel){
@@ -106,10 +123,6 @@ public class NotasView extends MainWindow<NotasViewModel> {
 		columnaNotas.setFont(11).setTitle("Notas");
 		columnaNotas.setFont(9).bindContentsToProperty("notas");
 
-	}
-
-	public static void main(String[] args) {
-		new NotasView().startApplication();
 	}
 
 }

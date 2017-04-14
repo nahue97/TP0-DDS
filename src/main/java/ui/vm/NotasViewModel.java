@@ -1,4 +1,4 @@
-package ui;
+package ui.vm;
 
 import model.Asignacion;
 import model.Estudiante;
