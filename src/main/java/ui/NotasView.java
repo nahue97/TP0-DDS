@@ -4,6 +4,7 @@ package ui;
 //Ese es el token que estoy usando para probar la UI
 
 import java.awt.Color;
+
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -13,6 +14,7 @@ import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.MainWindow;
+
 import model.Asignacion;
 
 @SuppressWarnings("serial")
@@ -63,56 +65,48 @@ public class NotasView extends MainWindow<NotasViewModel> {
 		new Label(usuarioPanel).setText("Usuario de GIT: ").setFontSize(11);
 		new Label(usuarioPanel).setFontSize(11).setWidth(100).bindValueToProperty("estudianteUsuario");
 
-		new Label(mainPanel).setText("Asignaturas: ");
+		new Label(mainPanel).setText("Asignaturas").setForeground(Color.BLACK).setFontSize(12).setBackground(Color.lightGray);
 
-		// DATOS ASIGNATURA DE PRUEBA
-		/*
-		 * new Label(mainPanel).bindValueToProperty("asignaturaId");
-		 * 
-		 * new Label(mainPanel).bindValueToProperty("asignaturaTitulo");
-		 * 
-		 * new Label(mainPanel).bindValueToProperty("asignaturaDescripcion");
-		 */
-
-		new Label(mainPanel).setHeigth(30).bindValueToProperty("textoAsignaturas");// El
-																					// label
-																					// se
-																					// va
-																					// a
-																					// encargar
-																					// de
-																					// mostrar
-																					// las
-																					// cosas
-		// ya que la tabla no sale
-
-		// Tabla Fallida
-/*		Table<Asignacion> tableAsignaturas = new Table<Asignacion>(mainPanel, Asignacion.class);
-		tableAsignaturas.setHeigth(300);
-		tableAsignaturas.setWidth(1000);
+		this.tablaResultadoAsignaciones(mainPanel);
+		
+	}
+	
+	protected void tablaResultadoAsignaciones(Panel mainPanel){
+		Table<Asignacion> tableAsignaturas = new Table<Asignacion>(mainPanel, Asignacion.class);
+		tableAsignaturas.setHeigth(100);
+		tableAsignaturas.setWidth(400);
 		tableAsignaturas.bindItemsToProperty("listaDeAsignaturas");
-		tableAsignaturas.bindValueToProperty("asignacionSeleccionada");
+		
+		this.tablaAsignaciones(tableAsignaturas);
+	}
+	
+	protected void tablaAsignaciones(Table<Asignacion> tableAsignaturas){
 
-		Column<Asignacion> columnaId = new Column<Asignacion>(tableAsignaturas);
-		columnaId.setTitle("Id");
-		columnaId.setFixedSize(50);
-		columnaId.bindContentsToProperty("id");
+		new Column<Asignacion>(tableAsignaturas) //
+			.setFont(11)
+			.setTitle("Id")
+			.setFixedSize(50)
+			.setFont(9)
+			.bindContentsToProperty("id");
 
-		Column<Asignacion> columnaTitulo = new Column<Asignacion>(tableAsignaturas);
-		columnaTitulo.setTitle("Titulo");
-		columnaTitulo.bindContentsToProperty("title");
+		new Column<Asignacion>(tableAsignaturas)
+			.setFont(11)
+			.setTitle("Titulo")
+			.setFixedSize(100)
+			.setFont(9)
+			.bindContentsToProperty("titulo");
 
 		Column<Asignacion> columnaDescripcion = new Column<Asignacion>(tableAsignaturas);
-		columnaDescripcion.setTitle("Descripcion");
-		columnaDescripcion.bindContentsToProperty("description");
+		columnaDescripcion.setFont(11).setTitle("Descripcion");
+		columnaDescripcion.setFixedSize(150);
+		columnaDescripcion.setFont(9).bindContentsToProperty("description");
 
-		// Las notas las dejamos para despu�s, primero que salga todo lo otro
-		// Column<Asignacion> columnaNotas = new
-		// Column<Asignacion>(tableAsignaturas);
-		// columnaNotas.setTitle("Notas");
-		// columnaId.bindContentsToProperty("asignaturaNotas");
+		Column<Asignacion> columnaNotas = new
+		Column<Asignacion>(tableAsignaturas);
+		columnaNotas.setFont(11).setTitle("Notas");
+		columnaNotas.setFont(9).bindContentsToProperty("notas");
 
-*/	}
+	}
 
 	public static void main(String[] args) {
 		new NotasView().startApplication();

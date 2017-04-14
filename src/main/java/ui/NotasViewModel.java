@@ -2,7 +2,6 @@ package ui;
 
 import model.Asignacion;
 import model.Estudiante;
-import model.Nota;
 import services.RequestService;
 
 import org.uqbar.commons.utils.Observable;
@@ -14,10 +13,9 @@ import java.util.List;
 public class NotasViewModel{
 	private String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMTEyMjIzMzMiLCJybmQiOiJ5SXNmZFIwN2lIR3BRRmVjYU9KT2VRPT0ifQ.9pVJGUXhrJPQ-TptNCt971l0h_1dWqWgMrHAWXJchho";
 	private RequestService requester;
-	private String estudianteApellido, estudianteNombre, estudianteUsuario, asignaturaTitulo, asignaturaDescripcion, textoAsignaturas = "";
-	private Integer estudianteLegajo,asignaturaId;
+	private String estudianteApellido, estudianteNombre, estudianteUsuario;
+	private Integer estudianteLegajo;
 	private List <Asignacion> listaDeAsignaturas;
-	private Asignacion asignacionSeleccionada;
 	
 	public void setUp(){
 		this.requester = new RequestService();
@@ -34,72 +32,9 @@ public class NotasViewModel{
 		estudianteNombre = estudiante.getNombre();
 		estudianteUsuario = estudiante.getUsuarioGithub();
 		listaDeAsignaturas = this.requester.getAssignmentsForStudent(token).getAsignaciones();
-		this.updateAsignacion(0);//C�digo que no se usa
-		this.updateTextoAsignaturas();
 	}
 	
-	public void updateAsignacion(int i){//No se usa
-		this.asignaturaId = listaDeAsignaturas.get(i).getId();
-		this.asignaturaTitulo = listaDeAsignaturas.get(i).getTitulo();
-		this.asignaturaDescripcion = listaDeAsignaturas.get(i).getDescription();
-	}
-	
-	public void updateTextoAsignaturas(){
-		textoAsignaturas = "";
-		
-		for(Asignacion asignatura:listaDeAsignaturas){
-			textoAsignaturas = textoAsignaturas + this.datosDeAsignatura(asignatura) + "\n";
-		}
-	}
-	
-	public String datosDeAsignatura(Asignacion asignatura){
-		int id = asignatura.getId();
-		String titulo = asignatura.getTitulo();
-		String descripcion = asignatura.getDescription();
-		List<Nota> notas = asignatura.getNotas();
-		
-		return "Materia: " + titulo + "   ID: " + id + "   Descripcion: " + descripcion + "   Notas: " + this.procesarNotas(notas);
-	}
-	
-	public String procesarNotas(List<Nota> notas){
-		String texto = "";
-		
-		for(Nota nota:notas){
-			texto = texto + this.datosDeNota(nota) + "\n";
-		}
-		
-		return texto;
-	}
-	
-	public String datosDeNota(Nota nota){
-		int id = nota.getId();
-		String valor = nota.getValor();
-		String creado = nota.getCreado();
-		String actualizado= nota.getActualizado();
-		
-		return "ID: " + id + "   Valor: " + valor + "   Creado: " + creado + "   Actualizado: " + actualizado;
-	}
-	
-	//Sustituci�n de la tabla por label
-	
-	public String getTextoAsignaturas(){
-		return this.textoAsignaturas;
-	}
-	
-	//Getters para la tabla
-	public List<Asignacion> getAsignaciones(){
-		return this.listaDeAsignaturas;
-	}
-	
-	public Asignacion getAsignacionSeleccionada(){
-		return this.asignacionSeleccionada;
-	}
-	
-	public Asignacion selectedAsignacion(){
-		return this.getAsignaciones().get(0);//Pongo la primera para probar
-	}
-	
-	//Getters
+	//Getters	
 	public int getEstudianteLegajo(){
 		return this.estudianteLegajo;
 	}
@@ -115,28 +50,20 @@ public class NotasViewModel{
 	public String getToken(){
 		return this.token;
 	}
-	
-	//Asignaciones C�digo que no se usa
-	
-	public int getAsignaturaId(){
-		return this.asignaturaId;
+	public List<Asignacion> getListaDeAsignaturas(){
+		return this.listaDeAsignaturas;
 	}
-	public String getAsignaturaTitulo(){
-		return this.asignaturaTitulo;
-	}
-	public String getAsignaturaDescripcion(){
-		return this.asignaturaDescripcion;
-	}
-	
+	//Setters
 	public void setListaDeAsignaturas(List <Asignacion> listaDeAsignaturas){
 		this.listaDeAsignaturas = listaDeAsignaturas;
 	}
 	
-	//setters
 	public void setToken(String unToken){
 		this.token = unToken;
 	}
-	/* Toda la parte de modificar el usiario, desear�a saber c�mo hacerlo en una ventana nueva
+	
+}
+	/* Toda la parte de modificar el usuario, desear�a saber c�mo hacerlo en una ventana nueva
 	//Crear Estudiante
 	
 	Estudiante estudiante = new Estudiante();
@@ -157,5 +84,3 @@ public class NotasViewModel{
 	public void crearEstudiante(){
 		this.requester.createStudent(estudiante,token);
 	}*/
-	
-}

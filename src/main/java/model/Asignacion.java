@@ -2,8 +2,11 @@ package model;
 
 import java.util.List;
 
+import org.uqbar.commons.utils.Observable;
+
 import com.google.gson.annotations.SerializedName;
 
+@Observable
 public class Asignacion {
 	@SerializedName("id")
 	private int id;
