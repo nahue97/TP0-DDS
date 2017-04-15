@@ -63,24 +63,3 @@ public class NotasViewModel{
 	}
 	
 }
-	/* Toda la parte de modificar el usuario, desear�a saber c�mo hacerlo en una ventana nueva
-	//Crear Estudiante
-	
-	Estudiante estudiante = new Estudiante();
-	
-	public void setLegajo(int estudianteLegajo){
-		estudiante.setLegajo(666);
-	}
-	
-	public void setNombre(){
-		estudiante.setNombre("Susana");
-	}
-	public void setApellido(){
-		estudiante.setApellido("Peralta");
-	}
-	public void setUsuarioGithub(){
-		estudiante.setUsuarioGithub("La_Susy_Piola");
-	}
-	public void crearEstudiante(){
-		this.requester.createStudent(estudiante,token);
-	}*/

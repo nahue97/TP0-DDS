@@ -16,25 +16,33 @@ public class CrearEstudianteViewModel{
 	private String estudianteApellido, estudianteNombre, estudianteUsuario;
 	private Integer estudianteLegajo;
 	
+	Estudiante estudiante = new Estudiante();
+	
 	public void setUp(){
 		this.requester = new RequestService();
 		BasicConfigurator.configure();
 	}
 	
-	Estudiante estudiante = new Estudiante();
-	
-	public void guardarEstudiante() {
+	public void obtenerEstudiante() {
 		this.setUp();
-
-		estudiante.setLegajo(estudianteLegajo);
-		estudiante.setApellido(estudianteApellido);
-		estudiante.setNombre(estudianteNombre);
-		estudiante.setUsuarioGithub(estudianteUsuario);
 		
+		Estudiante estudiante = this.requester.getStudentByToken(token);
+		
+		estudianteLegajo = estudiante.getLegajo();
+		estudianteApellido = estudiante.getApellido();
+		estudianteNombre = estudiante.getNombre();
+		estudianteUsuario = estudiante.getUsuarioGithub();
+	}
+
+	public void guardarEstudiante() {
 		this.requester.createStudent(estudiante,token);
 	}
 	
 	//Getters	
+	public String getToken(){
+		return this.token;
+	} 
+	
 	public int getEstudianteLegajo(){
 		return this.estudianteLegajo;
 	}
@@ -48,10 +56,10 @@ public class CrearEstudianteViewModel{
 		return this.estudianteUsuario;
 	}
 	
+	//Setter
 	public void setLegajo(Integer estudianteLegajo){
 		estudiante.setLegajo(estudianteLegajo);
 	}
-	
 	public void setNombre(String estudianteNombre){
 		estudiante.setNombre(estudianteNombre);
 	}
@@ -61,9 +69,5 @@ public class CrearEstudianteViewModel{
 	public void setUsuarioGithub(String estudianteUsuario){
 		estudiante.setUsuarioGithub(estudianteUsuario);
 	}
-
-/*	public void crearEstudiante(){
-		this.requester.createStudent(estudiante,token);
-	}*/
 	
 }

@@ -28,42 +28,43 @@ public class CrearEstudianteView extends Dialog<CrearEstudianteViewModel> {
 		setTitle("Modificar Estudiante");
 		mainPanel.setLayout(new VerticalLayout());
 		
+		Panel tokenPanel = new Panel(mainPanel);
+		tokenPanel.setLayout(new HorizontalLayout());
+
+		new Label(tokenPanel).setText("Su Token:").setFontSize(11);
+		new TextBox(tokenPanel).setWidth(500).setHeigth(15).bindValueToProperty("token");
+		
 		Panel apellidoPanel = new Panel(mainPanel);
 		apellidoPanel.setLayout(new HorizontalLayout());
 		
 		new Label(apellidoPanel).setText("Apellido: ").setFontSize(11);
-		new TextBox(apellidoPanel).setWidth(500).setHeigth(15).bindValueToProperty("apellido");
+		new TextBox(apellidoPanel).setWidth(500).setHeigth(15).bindValueToProperty("estudianteApellido");
 
 		Panel nombrePanel = new Panel(mainPanel);
 		nombrePanel.setLayout(new HorizontalLayout());
 
 		new Label(nombrePanel).setText("Nombre: ").setFontSize(11);
-		new TextBox(nombrePanel).setWidth(500).setHeigth(15).bindValueToProperty("nombre");
+		new TextBox(nombrePanel).setWidth(500).setHeigth(15).bindValueToProperty("estudianteNombre");
 
 		Panel legajoPanel = new Panel(mainPanel);
 		legajoPanel.setLayout(new HorizontalLayout());
 
 		new Label(legajoPanel).setText("Legajo: ").setFontSize(11);
-		new TextBox(legajoPanel).setWidth(510).setHeigth(15).bindValueToProperty("legajo");
+		new TextBox(legajoPanel).setWidth(510).setHeigth(15).bindValueToProperty("estudianteLegajo");
 
 		Panel usuarioPanel = new Panel(mainPanel);
 		usuarioPanel.setLayout(new HorizontalLayout());
 
 		new Label(usuarioPanel).setText("Usuario de GIT: ").setFontSize(11);
-		new TextBox(usuarioPanel).setWidth(460).setHeigth(15).bindValueToProperty("usuarioGithub");
+		new TextBox(usuarioPanel).setWidth(460).setHeigth(15).bindValueToProperty("estudianteUsuario");
 
+		getModelObject().obtenerEstudiante();
 	}
 
 	@Override
 	protected void addActions(Panel actions) {
-		new Button(actions).setCaption("Aceptar").onClick(this::accept).setAsDefault();
+		new Button(actions).setCaption("Aceptar").onClick(()->getModelObject().guardarEstudiante()).setAsDefault();
 		new Button(actions).setCaption("Cancelar").onClick(this::cancel);
-	}
-
-	@Override
-	protected void executeTask() {
-		System.out.println("Me aceptaron, yuppiiii!!!");
-		super.executeTask();
 	}
 
 }
